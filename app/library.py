@@ -1,13 +1,43 @@
 import json
 from typing import Optional, List
 from book import Book, ValidationError
+from pathlib import Path
+
+STORAGE_FILE = "library"
 
 
 class LibraryManager:
-    def __init__(self, storage_file: str = "library.json"):
-        self.storage_file = storage_file
+    """
+    Класс для управления коллекцией книг, загрузкой, добавлением,
+    удалением, выводом содержимого из .json файла.
+    """
+
+    def __init__(self, storage_file: str = STORAGE_FILE):
+        self.storage_file = self._valid_path(Path(storage_file))
         self.books: List[Book] = []
         self._load_books()
+
+    def _valid_path(self, path_file: Path) -> Path:
+        """Функция валидации пути к файлу/папке хранилища"""
+        if path_file.suffix == ".json":
+            if path_file.exists():
+                # Если файл существует
+                return path_file
+            if '/' not in path_file.as_posix():
+                # Если это название файла с расширением ".json"
+                return path_file
+
+            # Указанный путь {path_file} - неправильный.
+            # В директории расположения скрипта будет создан файл 'library.json'
+            # для работы с данными
+            return Path('library.json').resolve()
+        if path_file.exists():
+            # Если это существующая директория в ней будет создан файл 'library.json'
+            return path_file / 'library.json'
+
+        # Если введены некорректные данные или путь не существует, будет создан файл
+        # "library.json" в директории скрипта.
+        return Path('library.json').resolve()
 
     def _load_books(self):
         """Load books from the storage file."""

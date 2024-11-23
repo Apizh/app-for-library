@@ -15,7 +15,7 @@ class TestBook(unittest.TestCase):
         self.assertIsInstance(first, Book)
 
     def test_initialization_invalid_author(self):
-        """Тевст: Проверка обработки некорректного ввода данных автора"""
+        """Тест: Проверка обработки некорректного ввода данных автора"""
         with self.assertRaises(ValidationError):
             Book.validate_author('12345')
 
