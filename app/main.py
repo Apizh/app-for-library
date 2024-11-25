@@ -1,6 +1,7 @@
 from typing import List
-from app.book import Book
+from .book import Book
 from app.library import LibraryManager
+from .book import ValidationError
 
 
 def run_cli():
@@ -34,7 +35,8 @@ def run_cli():
             try:
                 year = int(input("Введите год издания книги: ").strip())
                 book = manager.add_book(title, author, year)
-                print(f"Книга добавлена: {book}")
+                if book:
+                    print(f"Книга добавлена: {book.__dict__}")
             except ValueError:
                 print("Год должен быть числом.")
 
@@ -82,5 +84,5 @@ def run_cli():
         else:
             print("Некорректный выбор. Пожалуйста, повторите.")
 
-
-run_cli()
+if __name__ == "__main__":
+    run_cli()

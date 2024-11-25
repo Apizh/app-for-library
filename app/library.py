@@ -1,6 +1,6 @@
 import json
 from typing import Optional, List
-from book import Book, ValidationError
+from app.book import Book, ValidationError
 from pathlib import Path
 
 STORAGE_FILE = "library"
@@ -46,6 +46,7 @@ class LibraryManager:
                 data = json.load(file)
                 self.books = [Book.from_dict(book) for book in data]
         except (FileNotFoundError, json.JSONDecodeError):
+            print(f'Ошибка чтения файла: "{self.storage_file}".\nСоздан файл library.json для хранения данных.')
             self.books = []
 
     def _save_books(self):
@@ -60,7 +61,7 @@ class LibraryManager:
             new_book = Book(id=new_id, title=title, author=author, year=year)
         except ValidationError as e:
             print(f"Ошибка добавления книги: {e}")
-            return None
+
         self.books.append(new_book)
         self._save_books()
         return new_book

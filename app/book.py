@@ -21,9 +21,11 @@ class Book:
     def validate_title(title: str) -> str:
         '''Checking the entered data of the title'''
         title = title.strip()
-        if not findall(r"[a-zA-ZА-Яа-яёЁ]{2,}", title) or len(title) > 50:
+        if not title[0].isalpha() or len(title) > 50 or '  ' in title:
             raise ValidationError(
-                "Название книги должно содержать от 1 до 50 символов, но не менее 1-й буквы в начале.")
+                "Название книги должно содержать от 2 до 50 символов, но не менее 1-й буквы в начале."
+                "Слова должны быть разделены одним пробелом"
+            )
         return title
 
     @staticmethod
@@ -33,7 +35,9 @@ class Book:
         func = lambda x: x.isalpha and 1 < len(x) < 11
         if not (1 < sum(map(func, author.split())) < 6 and 51 > len(author) > 4):
             raise ValidationError(
-                "Имя автора должно состоять от 2 до 5 слов состоящих из букв от 2 до 10 разделённых пробелами включая границы диапазонов.")
+                "Имя автора должно состоять от 2 до 5 слов состоящих из букв от 2 до 10"
+                "разделённых пробелами включая границы диапазонов."
+            )
         return author
 
     @staticmethod

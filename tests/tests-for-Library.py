@@ -1,6 +1,5 @@
 import unittest
 from app.library import LibraryManager, STORAGE_FILE
-from pathlib import Path
 
 
 class TestLibrary(unittest.TestCase):
@@ -20,9 +19,9 @@ class TestLibrary(unittest.TestCase):
     def test_input_path(self):
         """Тест: указание существующей директории(абсолютный путь) на выходе
         полный путь к файлу 'директория/library.json'"""
-        adress = r"C:\Users\admin\PycharmProjects\library-app"
-        file_path = LibraryManager(adress).storage_file
+        test_path = r"C:\Users\admin\PycharmProjects\library-app"
+        file_path = LibraryManager(test_path).storage_file
         # Проверяем что это не файл
         self.assertFalse(file_path.is_file())
         # Проверка создания абсолютного пути к файлу adress + library.json
-        self.assertEqual(str(file_path), adress + '\library.json')
+        self.assertEqual(str(file_path), test_path + '\library.json')
