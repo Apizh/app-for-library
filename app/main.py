@@ -1,7 +1,6 @@
 from typing import List
-from .book import Book
+from app.book import Book
 from app.library import LibraryManager
-from .book import ValidationError
 
 
 def run_cli():
@@ -17,7 +16,7 @@ def run_cli():
         print("-" * 80)
         for book in books:
             print(f"{book.id:<5} | {book.title:<30} | {book.author:<20} | {book.year:<4} | {book.status:<9}")
-        print('Конец списка книг\n')
+        print('Конец списка книг')
 
     while True:
         print("*** Система управления библиотекой ***")

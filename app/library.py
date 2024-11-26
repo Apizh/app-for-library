@@ -56,11 +56,21 @@ class LibraryManager:
 
     def add_book(self, title: str, author: str, year: int) -> Book:
         """Add a new book to the library."""
-        new_id = max((book.id for book in self.books), default=0) + 1
+        new_id = 1  # Начинаем с 1, если список пуст
+
+        if self.books:
+            for i, book in enumerate(self.books, start=1):  # Перебор с индексацией с 1
+                if book.id != i:  # Ищем пропуск
+                    new_id = i  # Пропуск найден, присваиваем новый id
+                    break
+            else:
+                # Если пропусков не найдено, новый id будет следующим за последним
+                new_id = i + 1
         try:
             new_book = Book(id=new_id, title=title, author=author, year=year)
         except ValidationError as e:
             print(f"Ошибка добавления книги: {e}")
+            return None
 
         self.books.append(new_book)
         self._save_books()

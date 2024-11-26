@@ -1,5 +1,4 @@
 from datetime import datetime
-from re import findall
 
 
 class ValidationError(Exception):
@@ -19,7 +18,7 @@ class Book:
 
     @staticmethod
     def validate_title(title: str) -> str:
-        '''Checking the entered data of the title'''
+        """Checking the entered data of the title"""
         title = title.strip()
         if not title[0].isalpha() or len(title) > 50 or '  ' in title:
             raise ValidationError(
@@ -30,7 +29,7 @@ class Book:
 
     @staticmethod
     def validate_author(author: str) -> str:
-        '''Checking the entered data of the author'''
+        """Checking the entered data of the author"""
         author = author.strip()
         func = lambda x: x.isalpha and 1 < len(x) < 11
         if not (1 < sum(map(func, author.split())) < 6 and 51 > len(author) > 4):
@@ -51,7 +50,7 @@ class Book:
                 f"Год издания должен быть в диапазоне от 1900 до {current_year} включая границы диапазона.")
         return year
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Convert the book to a dictionary."""
         return {
             "id": self.id,
