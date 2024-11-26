@@ -54,11 +54,13 @@ class LibraryManager:
         with open(self.storage_file, "w", encoding="utf-8") as file:
             json.dump([book.to_dict() for book in self.books], file, ensure_ascii=False, indent=4)
 
-    def add_book(self, title: str, author: str, year: int) -> Book:
+    def add_book(self, title: str, author: str, year: int) -> Book | None:
         """Add a new book to the library."""
         new_id = 1  # Начинаем с 1, если список пуст
 
         if self.books:
+            # Сортируем книги по id, чтобы гарантировать правильный порядок
+            self.books.sort(key=lambda book: book.id)
             for i, book in enumerate(self.books, start=1):  # Перебор с индексацией с 1
                 if book.id != i:  # Ищем пропуск
                     new_id = i  # Пропуск найден, присваиваем новый id
@@ -77,7 +79,7 @@ class LibraryManager:
         return new_book
 
     def delete_book(self, book_id: int) -> bool:
-        """Delete a book by its ID."""
+        """Delete a book by its id."""
         for book in self.books:
             if book.id == book_id:
                 self.books.remove(book)

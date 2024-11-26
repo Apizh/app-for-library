@@ -12,7 +12,7 @@ def run_cli():
         if not books:
             print("Книг не найдено.")
             return
-        print(f"{'ID':<5} | {'Название':<30} | {'Автор':<20} | {'Год':<4} | {'Статус':<9}")
+        print(f"{'id':<5} | {'Название':<30} | {'Автор':<20} | {'Год':<4} | {'Статус':<9}")
         print("-" * 80)
         for book in books:
             print(f"{book.id:<5} | {book.title:<30} | {book.author:<20} | {book.year:<4} | {book.status:<9}")
@@ -41,13 +41,13 @@ def run_cli():
 
         elif choice == "2":
             try:
-                book_id = int(input("Введите ID книги для удаления: ").strip())
+                book_id = int(input("Введите id книги для удаления: ").strip())
                 if manager.delete_book(book_id):
                     print("Книга успешно удалена.")
                 else:
-                    print("Книга с указанным ID не найдена.")
+                    print("Книга с указанным id не найдена.")
             except ValueError:
-                print("ID должен быть числом.")
+                print("id должен быть числом.")
 
         elif choice == "3":
             title = input("Введите название книги для поиска (или оставьте пустым): ").strip()
@@ -64,7 +64,7 @@ def run_cli():
 
         elif choice == "5":
             try:
-                book_id = int(input("Введите ID книги для изменения статуса: ").strip())
+                book_id = int(input("Введите id книги для изменения статуса: ").strip())
                 new_status = input("Введите новый статус ('в наличии' или 'выдана'): ").strip()
                 if new_status not in ["в наличии", "выдана"]:
                     print('Некорректный статус. Используйте "в наличии" или "выдана".')
@@ -72,9 +72,9 @@ def run_cli():
                 if manager.update_status(book_id, new_status):
                     print("Статус книги успешно обновлен.")
                 else:
-                    print("Книга с указанным ID не найдена.")
+                    print("Книга с указанным id не найдена.")
             except ValueError:
-                print("ID должен быть числом.")
+                print("id должен быть числом.")
 
         elif choice == "0":
             print("Выход из программы. До свидания!")
@@ -82,6 +82,7 @@ def run_cli():
 
         else:
             print("Некорректный выбор. Пожалуйста, повторите.")
+
 
 if __name__ == "__main__":
     run_cli()

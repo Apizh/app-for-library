@@ -25,7 +25,7 @@ class TestBook(unittest.TestCase):
             Book.validate_author('ав')
 
     def test_initialization_invalid_year(self):
-        """Тест: Проверка обработки некорректых данных для поля year"""
+        """Тест: Проверка обработки некорректных данных для поля year"""
         with self.assertRaises(ValidationError):
             Book.validate_year(1500)
 
